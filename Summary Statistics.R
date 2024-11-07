@@ -72,7 +72,7 @@ y[11]
 # Arrays start at 1 not 0 in R
 y[0]
 
-# next class start here====>
+
 
 ?sd()
 
@@ -115,6 +115,8 @@ num_data <- c(3, 7, 2)# numeric series without decimals
 # Combine Values Into A Vector Or List
 # Try run it....https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/c
 
+num_data[1]
+
 
 class(num_data) # identifies class of data
 
@@ -126,6 +128,10 @@ class(num_data_dec)
 str(num_data_dec)
 
 int_nums = as.integer(num_data_dec)# convert data types
+typeof(int_nums)
+
+num_data = as.double(c(3, 7, 2))
+typeof(num_data)
 
 ###################################
 # Chars
@@ -133,7 +139,7 @@ int_nums = as.integer(num_data_dec)# convert data types
 char <- "some text" # strings
 char
 class(char)
-
+typeof(char)
 numAsChar= as.character(int_nums)
 
 # case and space sensitivity 
@@ -168,7 +174,7 @@ class(text) # to know the class
 
 text_factor <- as.factor(text) # transform to factor
 class(text_factor) # recheck the class
-
+levels(text_factor)
 ##############################################
 # Logical
 # are boolean true or false
@@ -180,6 +186,7 @@ value2 <- 9
 (greater <- value1 > value2)
 
 class(greater)
+typeof(greater)
 
 # is value1 less than or equal to value2?
 less <- value1 <= value2
@@ -212,6 +219,9 @@ m1 <- matrix(C<-(1:10),nrow=5, ncol=6)
 m1
 a_m1 <- apply(m1, 2, sum)
 a_m1
+typeof(a_m1)
+class(a_m1)
+l_m1=lapply(m1, 2, sum) # error
 
 ######################################
 # List Apply
@@ -236,6 +246,7 @@ str(movies_lower)
 
 # We can measure the minimum speed and stopping distances of cars from the cars dataset.
 dt <- cars
+view(cars)
 lmn_cars <- lapply(dt, min)
 smn_cars <- sapply(dt, min)
 lmn_cars
@@ -264,16 +275,17 @@ dat <- iris # load the iris dataset and renamed it dat
 
 View(iris)
 
+head(dat)
 head(dat,25) # first 6 observations
 str(dat) # structure of dataset
 
-levels(iris$Species) # note $ refers to col
+levels(dat$Species) # note $ refers to col
 
 
 #############
 # min, max
 #############
-min(dat$Sepal.Length)
+min(dat$Petal.Length)
 max(dat$Sepal.Length)
 
 #================================= START HERE!!!!!
