@@ -5,9 +5,9 @@
 # Hadley Wickham R for Data Science
 # https://statsandr.com/blog/descriptive-statistics-in-r/
 # https://statsandr.com/blog/data-types-in-r/
-#
+# https://www.w3schools.com/r/r_stat_intro.asp
 # Author: George Campanis
-# Date: 06-Oct-2024
+# Date: 14-Nov-2024
 # Purpose: Teaching Summary Stats to DA Group 
 ###################################################################
 
@@ -204,6 +204,57 @@ numbers2 <- 1.5:6.3
 numbers2
 
 #########################
+#          Lists
+#########################
+thislist <- list("apple", "banana", "cherry")
+thislist[1]
+
+# check exists
+thislist <- list("apple", "banana", "cherry")
+"apple" %in% thislist
+
+#append
+thislist <- list("apple", "banana", "cherry")
+append(thislist, "orange")  # add at location=> append(thislist, "orange", after = 2)
+
+#remove from list
+thislist <- list("apple", "banana", "cherry")
+newlist <- thislist[-1]
+
+#loop thru list
+for (x in thislist) {
+  print(x)
+}
+
+# Join lists
+list1 <- list("a", "b", "c")
+list2 <- list(1,2,3)
+list3 <- c(list1,list2)
+
+
+#########################
+#          Matrix
+#########################
+# Create a matrix
+thismatrix <- matrix(c(1,2,3,4,5,6), nrow = 3, ncol = 2)
+
+# Print the matrix
+thismatrix
+
+# Combine matrices
+Matrix1 <- matrix(c("apple", "banana", "cherry", "grape"), nrow = 2, ncol = 2)
+Matrix2 <- matrix(c("orange", "mango", "pineapple", "watermelon"), nrow = 2, ncol = 2)
+
+# Adding it as a rows
+Matrix_Combined <- rbind(Matrix1, Matrix2)
+Matrix_Combined
+
+# Adding it as a columns
+Matrix_Combined <- cbind(Matrix1, Matrix2)
+Matrix_Combined
+
+
+#########################
 #          Data Frames
 #########################
 # Create a data frame
@@ -227,6 +278,128 @@ Data_Frame
 
 summary(Data_Frame)
 
+# Add a new row
+New_row_DF <- rbind(Data_Frame, c("Strength", 110, 110))
+# Print the new row
+New_row_DF
+
+# Add a new column
+New_col_DF <- cbind(Data_Frame, Steps = c(1000, 6000, 2000))
+# Print the new column
+New_col_DF
+
+# Remove the first row and column
+Data_Frame_New <- Data_Frame[-c(1), -c(1)]
+# Print the new data frame
+Data_Frame_New
+
+
+#find number of cols and rows
+ncol(Data_Frame)
+nrow(Data_Frame)
+
+# combine 2 df's vertically rbind()
+Data_Frame1 <- data.frame (
+  Training = c("Strength", "Stamina", "Other"),
+  Pulse = c(100, 150, 120),
+  Duration = c(60, 30, 45)
+)
+
+Data_Frame2 <- data.frame (
+  Training = c("Stamina", "Stamina", "Strength"),
+  Pulse = c(140, 150, 160),
+  Duration = c(30, 30, 20)
+)
+
+New_Data_Frame <- rbind(Data_Frame1, Data_Frame2)
+New_Data_Frame
+
+# combine 2 df's horizontally cbind()
+Data_Frame3 <- data.frame (
+  Training = c("Strength", "Stamina", "Other"),
+  Pulse = c(100, 150, 120),
+  Duration = c(60, 30, 45)
+)
+
+Data_Frame4 <- data.frame (
+  Steps = c(3000, 6000, 2000),
+  Calories = c(300, 400, 300)
+)
+
+New_Data_Frame1 <- cbind(Data_Frame3, Data_Frame4)
+New_Data_Frame1
+
+
+#########################
+#          Fn
+#########################
+my_function <- function() {
+  print("Hello World!")
+}
+my_function() # call the function named my_function
+
+
+my_function <- function(fname) {
+  paste(fname, "George")
+}
+
+my_function("Bob")
+
+#########################
+# Conditional Statements
+#########################
+a <- 33
+b <- 200
+
+if (b > a) {
+  print("b is greater than a")
+}
+
+a <- 33
+b <- 33
+
+if (b > a) {
+  print("b is greater than a")
+} else if (a == b) {
+  print ("a and b are equal")
+}
+
+#########################
+#     While Loops
+#########################
+i <- 1
+while (i < 6) {
+  print(i)
+  i <- i + 1
+}
+
+
+#break
+i <- 1
+while (i < 6) {
+  print(i)
+  i <- i + 1
+  if (i == 4) {
+    break
+  }
+}
+
+
+#########################
+#     For Loops
+#########################
+for (x in 1:10) {
+  print(x)
+}
+
+adj <- list("red", "big", "tasty")
+
+fruits <- list("apple", "banana", "cherry")
+for (x in adj) {
+  for (y in fruits) {
+    print(paste(x, y))
+  }
+}
 
 
 
@@ -303,78 +476,6 @@ View(iris)
 head(dat,25) # first 6 observations
 library(dplyr)
 glimpse()
-
-#########################
-#          Fn
-#########################
-my_function <- function() {
-  print("Hello World!")
-}
-my_function() # call the function named my_function
-
-
-my_function <- function(fname) {
-  paste(fname, "George")
-}
-
-my_function("Bob")
-
-#########################
-# Conditional Statements
-#########################
-a <- 33
-b <- 200
-
-if (b > a) {
-  print("b is greater than a")
-}
-
-a <- 33
-b <- 33
-
-if (b > a) {
-  print("b is greater than a")
-} else if (a == b) {
-  print ("a and b are equal")
-}
-
-#########################
-#     While Loops
-#########################
-i <- 1
-while (i < 6) {
-  print(i)
-  i <- i + 1
-}
-
-
-#break
-i <- 1
-while (i < 6) {
-  print(i)
-  i <- i + 1
-  if (i == 4) {
-    break
-  }
-}
-
-
-#########################
-#     For Loops
-#########################
-for (x in 1:10) {
-  print(x)
-}
-
-adj <- list("red", "big", "tasty")
-
-fruits <- list("apple", "banana", "cherry")
-for (x in adj) {
-  for (y in fruits) {
-    print(paste(x, y))
-  }
-}
-
 
 
 
