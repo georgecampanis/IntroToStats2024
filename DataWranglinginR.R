@@ -6,16 +6,39 @@ library(nycflights13)
 library(dplyr)
 
 
-
-diamonds %>%
-  group_by(cut) %>%
-  summarize(avg_price = mean(price))
 ####################
 #    filter
 ###################
 
+# > corresponds to “greater than”
+# < corresponds to “less than”
+# >= corresponds to “greater than or equal to”
+# <= corresponds to “less than or equal to”
+# != corresponds to “not equal to.” The ! is used in many programming languages to indicate “not.”
+# 
+## | corresponds to “or”
+# & corresponds to “and”
+
+
+
+
+
+head(flights,25)
+View(flights)
+
+flightsD=flights
+
+
 alaska_flights <- flights %>% 
   filter(carrier == "AS")
+
+alaska_flights_delay_By10min <- flights %>% 
+  filter(carrier == "AS" & arr_delay >=10)
+
+
+alaska_flights_delayed <- flights %>% 
+  filter(carrier == "AS") %>% 
+  filter(arr_delay >0)
 
 
 portland_flights <- flights %>% 
@@ -26,6 +49,22 @@ View(portland_flights)
 btv_sea_flights_fall <- flights %>% 
   filter(origin == "JFK" & (dest == "BTV" | dest == "SEA") & month >= 10)
 # & |
+
+inclassExampleFilter= flights %>% 
+  filter((origin %in% c("JFK", "LGA")) & (month>=10 | month<=3) 
+         & (arr_delay<=0) & (distance>1000)|(origin=="EWR"))
+
+inclassExampleFilter= flights %>% 
+  filter((origin %in% c("JFK", "LGA")) & (month>=10 | month<=3) 
+          & (arr_delay<=0) & (distance>1000)|(origin=="EWR")) %>% 
+          filter((arr_delay==20)& origin!="EWR")
+
+#between(month, 7, 9)
+inclassExampleFilter= flights %>% 
+  filter((origin %in% c("JFK", "LGA")) & (month>=10 | between(month, 1, 3)) 
+         & (arr_delay<=0) & (distance>1000)|(origin=="EWR"))
+
+
 
 
 #COMMA works too
@@ -67,12 +106,19 @@ summary_monthly_temp <- weather %>%
   group_by(month) %>% 
   summarize(mean = mean(temp, na.rm = TRUE), 
             std_dev = sd(temp, na.rm = TRUE))
+
+
+summary_monthly_temp
+
+summary_monthly_temp <- weather %>% 
+  group_by(month) %>% 
+  summarize(mean_temp_in_F2 = mean(temp, na.rm = TRUE), 
+            mean_temp_in_C2 = mean(temp_in_C, na.rm = TRUE))
 summary_monthly_temp
 
 
-
 library(ggplot2)
-diamonds
+d=diamonds
 
 diamonds %>% 
   group_by(cut) # nothing changed but we see 5 possible cut groups
@@ -104,14 +150,6 @@ weather <- weather %>% # note: var overwrite
 
 glimpse(weather)
 
-summary_monthly_temp <- weather %>% 
-  group_by(month) %>% 
-  summarize(mean_temp_in_F2 = mean(temp, na.rm = TRUE), 
-            mean_temp_in_C2 = mean(temp_in_C, na.rm = TRUE))
-summary_monthly_temp
-
-
-
 
 flights <- flights %>% 
   mutate(gain = dep_delay - arr_delay)
@@ -132,7 +170,7 @@ gain_summary <- flights %>%
 gain_summary
 
 ggplot(data = flights, mapping = aes(x = gain)) +
-  geom_histogram(color = "white", bins = 20)
+  geom_histogram(color = "white", bins = 50)
 
 # create multiple vars
 flights <- flights %>% 
@@ -141,6 +179,8 @@ flights <- flights %>%
     hours = air_time / 60,
     gain_per_hour = gain / hours
   )
+
+### Start Here ====>
 
 ####################
 #    arrange and sort rows
@@ -190,8 +230,3 @@ flights_weather_joined <- flights %>%
   inner_join(weather, by = c("year", "month", "day", "hour", "origin"))
 View(flights_weather_joined)
 
-
-p <- ggplot(data = gapminder, mapping = aes(x = gdpPercap, y=lifeExp))
-p + geom_point() +
-  geom_smooth(method = "gam") +
-  scale_x_log10(labels = scales::dollar)
